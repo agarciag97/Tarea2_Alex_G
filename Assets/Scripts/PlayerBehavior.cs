@@ -21,11 +21,21 @@ public class PlayerBehavior : MonoBehaviour
     public GameObject Bullet;
     public float BulletSpeed = 100f;
     private bool _isShooting;
+    private GameBehavior _gameManager;
+
 
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
         _col = GetComponent<CapsuleCollider>();
+        _gameManager = GameObject.Find("Game Manager").GetComponent<GameBehavior>();
+    }
+    void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.name == "Enemy")
+            {
+                _gameManager.HP -= 1;
+            }
     }
 
     void Update()

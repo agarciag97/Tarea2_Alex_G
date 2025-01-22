@@ -11,7 +11,7 @@ public class EnemyBehavior : MonoBehaviour
     private int _locationIndex = 0;
     private NavMeshAgent _agent;
     public Transform Player;
-    private GameBehavior _gameManager;
+    private int _lives = 3;
 
 
     void Start()
@@ -20,7 +20,6 @@ public class EnemyBehavior : MonoBehaviour
         Player = GameObject.Find("Player").transform;
         InitializePatrolRoute();
         MoveToNextPatrolLocation();
-        _gameManager = GameObject.Find("Game Manager").GetComponent<GameBehavior>();
 
     }
 
@@ -66,13 +65,17 @@ public class EnemyBehavior : MonoBehaviour
             Debug.Log("Player out of range, resume patrol");
         }
     }
-    void OnCollisionEnter(Collision collision)
-    {
 
-        if(collision.gameObject.name == "Enemy")
+    public int EnemyLives
         {
-            _gameManager.HP -= 1;
+            get { return _lives; }
+            private set {
+                _lives = value;
+                if (_lives <= 0) {
+                Destroy(this.gameObject);
+                Debug.Log("Enemy down.");
+                }       
+            }
         }
-    }
 
 }
