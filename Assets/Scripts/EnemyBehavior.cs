@@ -77,5 +77,13 @@ public class EnemyBehavior : MonoBehaviour
                 }       
             }
         }
+    void OnCollisionEnter(Collision collision)
+        {
+        if (collision.gameObject.name == "Bullet(Clone)")
+        {
+            EnemyLives -= 1;
+            Debug.Log("Critical hit!");
+        }
+        }
 
 }
